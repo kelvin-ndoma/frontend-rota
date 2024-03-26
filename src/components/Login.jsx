@@ -8,7 +8,6 @@ const Login = ({ onLogin }) => {
     first_name: '',
     email: '',
     password: ''
-
   });
 
   const handleChange = (e) => {
@@ -22,7 +21,7 @@ const Login = ({ onLogin }) => {
       }, {
         withCredentials: true
       });
-  
+
       if (response.status === 200) {
         const userData = response.data.user;
         console.log('User data after login:', userData);
@@ -51,16 +50,16 @@ const Login = ({ onLogin }) => {
           handleLogin();
         }}>
           <div className="rounded-md shadow-sm -space-y-px">
-          <div>
-              <label htmlFor="email" className="sr-only">Name</label>
+            <div>
+              <label htmlFor="first_name" className="sr-only">First Name</label>
               <input
                 id="first_name"
                 name="first_name"
-                type="first_name"
+                type="text"
                 autoComplete="name"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="first_name"
+                placeholder="First Name"
                 value={formData.first_name}
                 onChange={handleChange}
               />

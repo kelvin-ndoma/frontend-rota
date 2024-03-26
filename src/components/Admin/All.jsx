@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const UserList = ({ user }) => {
+const All = ({ user }) => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -64,4 +64,4 @@ const UserList = ({ user }) => {
   );
 };
 
-export default UserList;
+export default All;
