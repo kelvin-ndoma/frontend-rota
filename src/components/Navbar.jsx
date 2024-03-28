@@ -22,12 +22,18 @@ const Navbar = ({ user, onLogout }) => {
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
+    <nav className="bg-gray-500 p-4">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0">
-            <Link to="/" className="text-white text-lg font-semibold">
-              My App
+            <Link to="/" className="text-white text-xl font-semibold hidden sm:block">
+
+              {/* Rotary */}
+              {/* Cloudinary image */}
+              <a href="https://rotarynairobi.org/" className="img-fluid">
+                <img src="https://res.cloudinary.com/dfczhaomn/image/upload/v1707953595/logo_l4i7ev.svg" className="h-12" alt="Rotary Logo" />
+                <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
+              </a>
             </Link>
           </div>
           <div className="flex space-x-4">
