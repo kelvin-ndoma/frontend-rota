@@ -53,7 +53,7 @@ const Admindashboard = ({ user }) => {
       
       {/* Main Content */}
       <div className="flex-1 p-4">
-        <h2 className="text-2xl font-bold mb-4">Welcome to you Dashbaord {user.first_name}!</h2>
+        <h2 className="text-2xl font-bold mb-4">Welcome to you Dashboard {user.first_name}!</h2>
         {/* Nested Routes */}
         <Routes>
           <Route path="/events" element={<Events user={user} />} />
