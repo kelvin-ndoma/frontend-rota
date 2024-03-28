@@ -1,42 +1,82 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
-const Register = ({ user }) => {
-  const [attendanceLists, setAttendanceLists] = useState([]);
+const Register = () => {
+  const [events, setEvents] = useState([]);
+  const [attendanceRecords, setAttendanceRecords] = useState([]);
+  const [selectedEventId, setSelectedEventId] = useState('');
 
   useEffect(() => {
-    fetchAttendanceLists();
-  }, []);
+    fetchAllEvents(); // Fetch all events when the component mounts
+  }, []); // Empty dependency array ensures this effect runs only once
 
-  const fetchAttendanceLists = async () => {
+  const fetchAllEvents = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/events', { withCredentials: true });
-      const events = response.data;
-      const promises = events.map(event => axios.get(`http://localhost:3000/events/${event.id}/attendance_list`, { withCredentials: true }));
-      const attendanceResponses = await Promise.all(promises);
-      const attendanceListsData = attendanceResponses.map(response => response.data);
-      setAttendanceLists(attendanceListsData);
+      const response = await fetch('http://localhost:3000/events');
+      if (response.ok) {
+        const data = await response.json();
+        setEvents(data);
+      } else {
+        throw new Error('Failed to fetch events');
+      }
     } catch (error) {
-      console.error('Error fetching attendance lists:', error);
+      console.error('Error fetching events:', error);
     }
   };
 
+  const fetchAttendanceRecords = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/admin/users/all_event_attendances`);
+      if (response.ok) {
+        const data = await response.json();
+        setAttendanceRecords(data);
+      } else {
+        throw new Error('Failed to fetch attendance records');
+      }
+    } catch (error) {
+      console.error('Error fetching attendance records:', error);
+    }
+  };
+
+  const handleEventChange = (event) => {
+    setSelectedEventId(event.target.value);
+  };
+
+  const renderAttendanceRecords = () => {
+    if (!selectedEventId) return null; // Return null if no event is selected
+
+    // Filter attendance records based on the selected event ID
+    const filteredRecords = attendanceRecords.filter(record => record.event_id === parseInt(selectedEventId));
+
+    return (
+      <div>
+        <h3>Attendance Records for Selected Event:</h3>
+        {filteredRecords.map((record, index) => (
+          <div key={index}>
+            <p>User: {record.user.first_name} {record.user.last_name}</p>
+            <p>Attendance: {record.status}</p>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
-    <div className="container mx-auto">
-      <h2 className="text-3xl font-bold mb-4">Attendance Lists</h2>
-      {attendanceLists.map((attendanceList, index) => (
-        <div key={index}>
-          <h3 className="text-xl font-semibold mb-2">Event {index + 1} Attendance List</h3>
-          <ul>
-            {attendanceList.map(attendance => (
-              <li key={attendance.id} className="border border-gray-400 rounded-md p-4 mb-4">
-                <div><span className="font-semibold">User ID:</span> {attendance.user_id}</div>
-                <div><span className="font-semibold">Status:</span> {attendance.status}</div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+    <div>
+      <h2>Attendance Records for Event</h2>
+      
+      <label htmlFor="eventSelect">Select Event:</label>
+      <select id="eventSelect" value={selectedEventId} onChange={handleEventChange}>
+        <option value="">Select an event</option>
+        {events.map(event => (
+          <option key={event.id} value={event.id}>{event.name}</option>
+        ))}
+      </select>
+
+      <button onClick={fetchAttendanceRecords}>Fetch Attendance Records</button>
+
+      <div>
+        {renderAttendanceRecords()}
+      </div>
     </div>
   );
 };
