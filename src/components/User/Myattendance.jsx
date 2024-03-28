@@ -8,18 +8,18 @@ const Myattendances = ({ user }) => {
 
   useEffect(() => {
     const fetchAttendances = async () => {
-        try {
-          const response = await axios.get(`http://localhost:3000/users/${user.id}/event_attendances`, { withCredentials: true });
-          console.log('Response:', response.data); // Add this line to check response data
-          setAttendances(response.data);
-          setLoading(false);
-        } catch (error) {
-          console.error('Error fetching user attendances:', error);
-          setError('Error fetching attendances. Please try again later.');
-          setLoading(false);
-        }
-      };
-      
+      try {
+        const response = await axios.get(`http://localhost:3000/users/${user.id}/event_attendances`, { withCredentials: true });
+        console.log('Response:', response.data); // Add this line to check response data
+        setAttendances(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching user attendances:', error);
+        setError('Error fetching attendances. Please try again later.');
+        setLoading(false);
+      }
+    };
+
 
     fetchAttendances();
   }, [user]);
@@ -40,12 +40,12 @@ const Myattendances = ({ user }) => {
       ) : (
         <ul>
           {attendances.map((attendance) => (
-  <li key={attendance.id}>
-    <div>Event: {attendance.event ? attendance.event.id : 'Unknown Event'}</div>
-    <div>Status: {attendance.status}</div>
-    {/* Add more details as needed */}
-  </li>
-))}
+            <li key={attendance.id}>
+              <div>Event: {attendance.event ? attendance.event.id : 'Unknown Event'}</div>
+              <div>Status: {attendance.status}</div>
+              {/* Add more details as needed */}
+            </li>
+          ))}
 
         </ul>
       )}
