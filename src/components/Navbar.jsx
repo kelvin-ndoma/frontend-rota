@@ -22,11 +22,11 @@ const Navbar = ({ user, onLogout }) => {
   };
 
   return (
-    <nav className="bg-gray-500 p-4">
+    <nav className="p-4 drop-shadow-xl bg-white border-r border-gray-300 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0">
-            <Link to="/" className="text-white text-xl font-semibold hidden sm:block">
+            <Link to="/" className="text-[#17458F] text-xl font-semibold hidden sm:block">
 
               {/* Rotary */}
               {/* Cloudinary image */}
@@ -40,7 +40,7 @@ const Navbar = ({ user, onLogout }) => {
             {user && user.role === 'normal' && (
               <Link
                 to="/dashboard"
-                className="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-[#17458F] font-bold px-3 py-2 rounded-md text-base"
               >
                 Dashboard
               </Link>
@@ -48,7 +48,7 @@ const Navbar = ({ user, onLogout }) => {
             {user && user.role === 'admin' && (
               <Link
                 to="/admindashboard"
-                className="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-[#17458F] px-3 py-2 rounded-md text-base font-medium"
               >
                 Admin Dashboard
               </Link>
@@ -56,7 +56,7 @@ const Navbar = ({ user, onLogout }) => {
             {user ? (
               <button
                 onClick={handleLogout}
-                className="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-[#17458F] px-3 py-2 rounded-md text-base font-bold"
               >
                 Logout
               </button>
@@ -64,13 +64,13 @@ const Navbar = ({ user, onLogout }) => {
               <>
                 <Link
                   to="/login"
-                  className="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-[#17458F] px-3 py-2 rounded-md text-base font-bold"
                 >
                   Login
                 </Link>
                 <Link
                   to="/signup"
-                  className="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-[#17458F] px-3 py-2 rounded-md text-base font-bold"
                 >
                   Signup
                 </Link>
