@@ -10,6 +10,11 @@ import axios from "axios";
 import Events from "./components/Admin/Events";
 import Mark from "./components/Admin/Mark";
 import Register from "./components/Admin/Register";
+import Payment from "./components/Admin/Payments";
+import Dashboard from "./components/User/Dashboard";
+import Myattendance from "./components/User/Myattendance";
+import Userevents from "./components/User/Userevents"; // Import Userevents component
+import Mypayments from "./components/User/Mypayments";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -73,6 +78,14 @@ function App() {
               <Route path="events" element={<Events user={user} />} />
               <Route path="mark" element={<Mark user={user} />} />
               <Route path="register" element={<Register user={user} />} />
+              <Route path="payments" element={<Payment user={user} />} />
+            </Route>
+          )}
+          {user && user.role !== 'admin' && (
+            <Route path="/dashboard" element={<Dashboard user={user} />}>
+              <Route path="myattendance" element={<Myattendance user={user} />} />
+              <Route path="userevents" element={<Userevents user={user} />} /> {/* Use Userevents component */}
+              <Route path="mypayments" element={<Mypayments user={user} />} /> 
             </Route>
           )}
           <Route path="/signup" element={<Signup />} />
