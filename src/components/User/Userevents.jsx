@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook to navigate
 
 const Userevents = ({ user }) => {
+  const navigate = useNavigate(); // Get navigate function to navigate
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -28,6 +30,11 @@ const Userevents = ({ user }) => {
     }
   };
 
+  // Function to navigate to payment page with event data
+  const navigateToPayment = (event) => {
+    navigate('/dashboard/mypayments', { state: { event: event } }); // Navigate to payment page with event object as state
+  };
+
   return (
     <div className="container mx-auto">
       <h2 className="text-3xl font-bold mb-4">Events</h2>
@@ -39,6 +46,7 @@ const Userevents = ({ user }) => {
             <p><span className="font-semibold">Location:</span> {event.location}</p>
             <p><span className="font-semibold">Datetime:</span> {formatDate(event.datetime)}</p>
             <p><span className="font-semibold">Description:</span> {event.description}</p>
+            <button onClick={() => navigateToPayment(event)} className="bg-blue-500 text-white px-4 py-2 rounded mt-2">Contribute</button>
           </div>
         ))}
       </div>

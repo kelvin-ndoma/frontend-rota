@@ -35,7 +35,7 @@ function Payments() {
 
     try {
       const { data } = await axios.post(
-        'https://046e-165-90-6-63.ngrok-free.app/stkpush',
+        'https://72c4-165-90-6-63.ngrok-free.app/stkpush',
         {
           phoneNumber: phoneNumber,
           amount: amount,
@@ -58,7 +58,7 @@ function Payments() {
     const checkStatus = async () => {
       try {
         const { data: responseData } = await axios.post(
-          'https://046e-165-90-6-63.ngrok-free.app/stkquery',
+          'https://72c4-165-90-6-63.ngrok-free.app/stkquery',
           {
             CheckoutRequestID: responseData.CheckoutRequestID,
           },
