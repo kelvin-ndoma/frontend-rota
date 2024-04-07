@@ -7,6 +7,7 @@ import Signup from "./components/Signup";
 import Admindashboard from "./components/Admin/Admindashboard";
 import axios from "axios";
 
+// import Events from "./components/Admin/Events1";
 import Events from "./components/Admin/Events";
 import Mark from "./components/Admin/Mark";
 import Register from "./components/Admin/Register";

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NavLink, Routes, Route } from 'react-router-dom';
+// import Events from './OldEvents';
 import Events from './Events';
 import Mark from './Mark';
 import Register from './Register';
@@ -75,8 +76,8 @@ const Admindashboard = ({ user }) => {
                   activeClassName="font-bold"
                   className="flex items-center p-2 rounded-lg group"
                 >
-                  <svg className="flex-shrink-0 w-5 h-5 text-blue-600 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                    <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
+                  <svg className="flex-shrink-0 w-5 h-5 text-blue-600 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                    <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                   </svg>
                   <span className="flex-1 ms-3 whitespace-nowrap">Mark</span>
                 </NavLink>
@@ -105,13 +106,27 @@ const Admindashboard = ({ user }) => {
                   <span className="flex-1 ms-3 whitespace-nowrap">Payments</span>
                 </NavLink>
               </li>
+              {/* logout */}
+              <li>
+                <NavLink
+                  to="/admindashboard/logout"
+                  activeClassName="font-bold"
+                  className="flex items-center p-2 rounded-lg group"
+                >
+                  <svg className="flex-shrink-0 w-5 h-5 text-blue-600 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
+                  </svg>
+                  <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
+                </NavLink>
+              </li>
+
             </ul>
           </div>
-        </aside >
+        </aside>
 
         {/* Main Content */}
-        < div className="flex-1 p-4" >
-          <h2 className="text-2xl font-bold mb-4">Welcome to your Dashboard {user.first_name}!</h2>
+        <div className="flex-1 p-4" >
+          <h2 className="text-base md:text-xl lg:text-2xl font-bold mb-4">Welcome to your Dashboard {user.first_name}!</h2>
           {/* Nested Routes */}
           <Routes>
             <Route path="/events" element={<Events user={user} />} />
@@ -119,8 +134,8 @@ const Admindashboard = ({ user }) => {
             <Route path="/register" element={<Register user={user} />} />
             <Route path="/payments" element={<Payments user={user} />} />
           </Routes>
-        </div >
-      </div >
+        </div>
+      </div>
     </>
   );
 };
