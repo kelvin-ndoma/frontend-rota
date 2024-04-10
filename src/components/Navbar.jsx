@@ -48,18 +48,15 @@ const Navbar = ({ user, onLogout }) => {
             {user && user.role === 'admin' && (
               <Link
                 to="/admindashboard"
-                className="text-[#17458F] px-3 py-2 rounded-md text-base font-medium"
+                className="text-[#17458F] px-3 py-2 rounded-md text-lg font-medium"
               >
-                Admin Dashboard
+                Welcome {user.first_name}
               </Link>
             )}
             {user ? (
-              <button
-                onClick={handleLogout}
-                className="text-[#17458F] px-3 py-2 rounded-md text-base font-bold"
-              >
-                Logout
-              </button>
+              <>
+                {/* Logged in user content */}
+              </>
             ) : (
               <>
                 <Link
@@ -76,6 +73,7 @@ const Navbar = ({ user, onLogout }) => {
                 </Link>
               </>
             )}
+
           </div>
         </div>
       </div>
