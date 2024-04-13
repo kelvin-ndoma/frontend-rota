@@ -6,6 +6,7 @@ import Events from './Events';
 import Mark from './Mark';
 import Register from './Register';
 import Payments from './Payments'; // Import the Payments component
+import Welcome from './Welcome';
 
 const Admindashboard = ({ user }) => {
 
@@ -112,13 +113,15 @@ const Admindashboard = ({ user }) => {
 
         {/* Main Content */}
         <div className="flex-1 p-4" >
-          <h2 className="text-base md:text-xl lg:text-2xl font-bold mb-4">Welcome to your Dashboard {user.first_name}!</h2>
-          {/* Nested Routes */}
+          {/* <h2 className="text-base md:text-xl lg:text-2xl font-bold mb-4">Welcome to your Dashboard {user.first_name}!</h2> */}
+                    <Welcome />
+          {/* Nested Routes  fror the sidebar*/}
           <Routes>
             <Route path="/events" element={<Events user={user} />} />
             <Route path="/mark" element={<Mark user={user} />} />
             <Route path="/register" element={<Register user={user} />} />
             <Route path="/payments" element={<Payments user={user} />} />
+            {/* <Time /> */}
           </Routes>
         </div>
       </div>

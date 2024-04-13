@@ -27,7 +27,7 @@ const Login = ({ onLogin }) => {
         console.log('User data after login:', userData);
         onLogin(userData);
         if (userData.role === 'admin') {
-          navigate('/admindashboard');
+          navigate('/welcome');
         } else {
           navigate('/dashboard');
         }

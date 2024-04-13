@@ -16,6 +16,7 @@ import Dashboard from "./components/User/Dashboard";
 import Myattendance from "./components/User/Myattendance";
 import Userevents from "./components/User/Userevents"; // Import Userevents component
 import Mypayments from "./components/User/Mypayments";
+import Welcome from "./components/Admin/Welcome";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -75,7 +76,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {user && user.role === 'admin' && (
-            <Route path="/admindashboard" element={<Admindashboard user={user} />} >
+            <Route path="/admindashboard/*" element={<Admindashboard user={user}  />} >
+              {/* Admin welcome page */}
+              {/* <Route path="/welcome" element={<Welcome user={user} />} /> */}
               <Route path="events" element={<Events user={user} />} />
               <Route path="mark" element={<Mark user={user} />} />
               <Route path="register" element={<Register user={user} />} />
@@ -86,7 +89,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard user={user} />}>
               <Route path="myattendance" element={<Myattendance user={user} />} />
               <Route path="userevents" element={<Userevents user={user} />} /> {/* Use Userevents component */}
-              <Route path="mypayments" element={<Mypayments user={user} />} /> 
+              <Route path="mypayments" element={<Mypayments user={user} />} />
             </Route>
           )}
           <Route path="/signup" element={<Signup />} />
