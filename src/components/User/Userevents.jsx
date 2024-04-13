@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook to navigate
+import { useNavigate } from 'react-router-dom';
 
 const Userevents = ({ user }) => {
-  const navigate = useNavigate(); // Get navigate function to navigate
+  const navigate = useNavigate();
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -19,7 +19,6 @@ const Userevents = ({ user }) => {
     }
   };
 
-  // Function to format the date
   const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
@@ -30,9 +29,8 @@ const Userevents = ({ user }) => {
     }
   };
 
-  // Function to navigate to payment page with event data
   const navigateToPayment = (event) => {
-    navigate('/dashboard/mypayments', { state: { event: event } }); // Navigate to payment page with event object as state
+    navigate('/dashboard/mypayments', { state: { event, user } });
   };
 
   return (
