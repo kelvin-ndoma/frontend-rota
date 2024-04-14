@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const Login = ({ onLogin }) => {
         console.log('User data after login:', userData);
         onLogin(userData);
         if (userData.role === 'admin') {
-          navigate('/welcome');
+          navigate('/admindashboard');
         } else {
           navigate('/dashboard');
         }
