@@ -3,7 +3,7 @@ import React from 'react'
 const Confrimpay = () => {
   return (
     <div>
-      Hello
+      Hello world
     </div>
   )
 }
