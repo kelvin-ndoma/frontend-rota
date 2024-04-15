@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import Confrimpay from './Confrimpay';
 
-const Payments = () => {
-  const location = useLocation();
-  const { event, user } = location.state;
+const Payments = ({ event, user }) => {
   const [accessToken, setAccessToken] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [amount, setAmount] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('');
 
+
+  console.log('Event:', event); 
   useEffect(() => {
+    console.log('Event:', event);
     fetchAccessToken();
-  }, []);
+  }, [event]);
 
   const fetchAccessToken = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/fetch_access_token'); // Changed from axios.get to axios.post
+      const response = await axios.post('http://localhost:3000/fetch_access_token');
       setAccessToken(response.data.access_token);
     } catch (error) {
       console.error('Error fetching access token:', error);
-      // Handle error gracefully (e.g., display error message to user)
+      // Handle error gracefully
     }
   };
 
@@ -88,7 +89,7 @@ const Payments = () => {
   return (
     <div className="container mx-auto">
       <h2 className="text-3xl font-bold mb-4">Make Payment</h2>
-      <h3 className="text-lg font-semibold mb-2">Event: {event && event.name}</h3>
+      <h3 className="text-lg font-semibold mb-2">Event: {event ? event.id : 'Loading event details...'}</h3>
       <h4 className="text-md font-semibold mb-2">User: {user && `${user.first_name} `}</h4>
       <form onSubmit={handleSubmit} className="mb-4">
         <div className="flex flex-col mb-4">
@@ -102,6 +103,7 @@ const Payments = () => {
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Pay Now</button>
       </form>
       {paymentStatus && <p>{paymentStatus}</p>}
+      <Confrimpay/>
     </div>
   );
 };

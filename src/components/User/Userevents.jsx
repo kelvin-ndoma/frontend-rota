@@ -30,6 +30,7 @@ const Userevents = ({ user }) => {
   };
 
   const navigateToPayment = (event) => {
+    console.log('Selected event:', event); // Logging the selected event
     navigate('/dashboard/mypayments', { state: { event, user } });
   };
 

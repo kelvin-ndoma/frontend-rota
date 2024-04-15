@@ -104,7 +104,8 @@ const Dashboard = ({ user }) => {
           <Routes>
             <Route path="/userevents" element={<Userevents user={user} />} />
             <Route path="/myattendance" element={<Myattendance user={user} />} />
-            <Route path="/mypayments" element={<Mypayments user={user} />} />
+            <Route path="/mypayments" element={<Mypayments user={user}  />} />
+           
             
           </Routes>
         </div >
