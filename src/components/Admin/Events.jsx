@@ -117,7 +117,7 @@ const Events = ({ user }) => {
 
                     {/* events list */}
                     <div className="flex flex-wrap justify-start mt-8">
-                        <div className="w-full lg:w-2/3 p-4 drop-shadow-2xl rounded-lg bg-white overflow-hidden">
+                        <div className="w-full p-4 drop-shadow-2xl rounded-lg bg-white overflow-hidden">
                             <h3 className="text-[#17458F] text-base font-bold mb-2">Events List</h3>
                             <div className="overflow-x-auto">
                                 <table className='table-auto border-collapse border border-gray-300'>

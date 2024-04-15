@@ -1,7 +1,7 @@
 import React from 'react';
 import Cards from './Cards';
 
-const Welcome = () => {
+const Welcome = ({ user }) => {
     const now = new Date();
 
     const time = now.toLocaleTimeString('EAT', { hour: '2-digit', minute: '2-digit' });
@@ -10,9 +10,10 @@ const Welcome = () => {
     return (
         <div className='welcome-pg'>
             <section className="flex size-full flex-col gap-5">
-                <div className="h-[303px] w-full rounded-[20px] bg-bgWelcome bg-cover">
+                <div className="h-[303px] w-full rounded-[20px] bg-bgWelcome bg-cover p-4">
                     <div className="flex h-full flex-col justify-between max-md:px-5 max-md:py-8 lg:p-11">
-                        <h2 className="glassmorphism max-w-[273px] rounded py-2 text-base font-normal">
+                    {/* <h1 className="font-semibold text-xl">Welcome {user.first_name}</h1> */}
+                        <h2 className="glassmorphism text-base font-normal">
                             Upcoming event at:
                         </h2>
                         <div className="flex flex-col gap-2">

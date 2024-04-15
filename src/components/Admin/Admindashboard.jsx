@@ -11,33 +11,36 @@ import Welcome from './Welcome';
 const Admindashboard = ({ user }) => {
 
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Send a DELETE request to the logout URL
-    // Include cookies for authentication
-    fetch('http://localhost:3000/logout', {
-      method: 'DELETE',
-      credentials: 'include'
-    })
-      .then(response => {
-        if (response.ok) {
-          // Redirect the user to homepage after successful logout
-          navigate('/');
-        } else {
-          // Handle error response
-          throw new Error('Logout failed');
-        }
-      })
-      .catch(error => {
-        console.error('Logout failed:', error);
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/logout', {
+        method: 'DELETE',
+        credentials: 'include', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
+      if (response.ok) {
+        // Reset client-side state if needed
+        localStorage.removeItem('user'); // Remove user data from local storage
+        window.alert('You are about to log out of your account');
+        // Redirect the user to the login page
+        window.location.href = '/login';
+      } else {
+        // Handle errors
+        console.error('Failed to logout:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Failed to logout:', error.message);
+    }
   };
+  
 
   return (
     <>
@@ -58,6 +61,19 @@ const Admindashboard = ({ user }) => {
           <div className="h-screen px-3 pb-4 overflow-y-auto bg-white">
             <ul className="space-y-2 font-medium">
               {/* dashboard */}
+              <li>
+                <NavLink
+                  to="/admindashboard"
+                  activeClassName="font-bold"
+                  className="flex items-center p-2 hover:bg-gray-100 group"
+                >
+                  <svg className="w-5 h-5 text-blue-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    <path d="M0 0h24v24H0z" fill="none" />
+                  </svg>
+                  <span className="ms-3">Home</span>
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to="/admindashboard/events"
@@ -107,6 +123,30 @@ const Admindashboard = ({ user }) => {
                   <span className="flex-1 ms-3 whitespace-nowrap">Payments</span>
                 </NavLink>
               </li>
+              {/* logout */}
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center p-2 rounded-lg group"
+                >
+                  <svg
+                    className="flex-shrink-0 w-5 h-5 text-blue-600 transition duration-75"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 16"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
+                    />
+                  </svg>
+                  <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
+                </button>
+              </li>
             </ul>
           </div>
         </aside>
@@ -114,9 +154,10 @@ const Admindashboard = ({ user }) => {
         {/* Main Content */}
         <div className="flex-1 p-4" >
           {/* <h2 className="text-base md:text-xl lg:text-2xl font-bold mb-4">Welcome to your Dashboard {user.first_name}!</h2> */}
-                    <Welcome />
+          {/* <Welcome /> */}
           {/* Nested Routes  fror the sidebar*/}
           <Routes>
+            <Route path="/" element={<Welcome user={user} />} />
             <Route path="/events" element={<Events user={user} />} />
             <Route path="/mark" element={<Mark user={user} />} />
             <Route path="/register" element={<Register user={user} />} />
