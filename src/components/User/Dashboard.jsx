@@ -16,26 +16,30 @@ const Dashboard = ({ user }) => {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Send a DELETE request to the logout URL
-    // Include cookies for authentication
-    fetch('http://localhost:3000/logout', {
-      method: 'DELETE',
-      credentials: 'include'
-    })
-      .then(response => {
-        if (response.ok) {
-          // Redirect the user to homepage after successful logout
-          navigate('/');
-        } else {
-          // Handle error response
-          throw new Error('Logout failed');
-        }
-      })
-      .catch(error => {
-        console.error('Logout failed:', error);
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/logout', {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
+      if (response.ok) {
+        // Reset client-side state if needed
+        localStorage.removeItem('user'); // Remove user data from local storage
+        window.alert('You are about to log out of your account');
+        // Redirect the user to the login page
+        window.location.href = '/login';
+      } else {
+        // Handle errors
+        console.error('Failed to logout:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Failed to logout:', error.message);
+    }
   };
+
 
   return (
     <>
@@ -93,6 +97,30 @@ const Dashboard = ({ user }) => {
                   <span className="flex-1 ms-3 whitespace-nowrap">Payments</span>
                 </NavLink>
               </li>
+              {/* logout */}
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center p-2 rounded-lg group"
+                >
+                  <svg
+                    className="flex-shrink-0 w-5 h-5 text-blue-600 transition duration-75"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 16"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
+                    />
+                  </svg>
+                  <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
+                </button>
+              </li>
             </ul>
           </div>
         </aside >
@@ -104,9 +132,8 @@ const Dashboard = ({ user }) => {
           <Routes>
             <Route path="/userevents" element={<Userevents user={user} />} />
             <Route path="/myattendance" element={<Myattendance user={user} />} />
-            <Route path="/mypayments" element={<Mypayments user={user}  />} />
-           
-            
+            <Route path="/mypayments" element={<Mypayments user={user} />} />
+
           </Routes>
         </div >
       </div >
