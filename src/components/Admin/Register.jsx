@@ -6,12 +6,27 @@ const Register = () => {
   const [attendances, setAttendances] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null); // Store selected event object
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/events',{withCredentials: true });
+        setEvents(response.data);
+      } catch (error) {
+        console.error(error);
+        setError("Failed to fetch events. Please try again later.");
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   const handleChange = (event) => {
-    const value = parseInt(event.target.value, 10);
-    if (value >= 1) {
-      setEventId(value);
-    }
+    const selectedEventName = event.target.value;
+    const eventObject = events.find(event => event.name === selectedEventName);
+    setSelectedEvent(eventObject); // Update selected event object
   };
 
   const handleSubmit = async (event) => {
@@ -19,7 +34,11 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.get(`http://localhost:3000/admin/events/${eventId}/all_event_attendances`);
+      if (!selectedEvent) {
+        setError("Please select an event");
+        return;
+      }
+      const response = await axios.get(`http://localhost:3000/admin/events/${selectedEvent.id}/all_event_attendances`, {withCredentials: true });
       setAttendances(response.data);
       if (response.data.length === 0) {
         setError("No attendances for this event");
@@ -42,19 +61,29 @@ const Register = () => {
     console.log("Attendances updated:", attendances);
   }, [attendances]);
 
-  // Function to format the date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleString(); // Adjust this according to your preferred date format
+    return date.toLocaleString();
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">Register Attendance <br></br> Please select an event below</h2>
       <form onSubmit={handleSubmit} className="mb-8">
-        <label htmlFor="event-id" className="block mb-2">Event ID:</label>
-        <input type="number" id="event-id" name="event-id" onChange={handleChange} min="1" className="border border-gray-300 rounded-md py-1 px-2 w-full sm:w-20 mr-2 bg-gray-100" />
-          <button type="submit" disabled={isLoading} className="bg-blue-500 text-white py-1 px-2 rounded-md">
+        <label htmlFor="event-name" className="block mb-2">Event Name:</label>
+        <select
+          id="event-name"
+          name="event-name"
+          value={selectedEvent ? selectedEvent.name : ''}
+          onChange={handleChange}
+          className="border border-gray-300 rounded-md py-1 px-2 w-full mb-2 bg-gray-100"
+        >
+          <option value="">Select an event</option>
+          {events.map(event => (
+            <option key={event.id} value={event.name}>{event.name}</option>
+          ))}
+        </select>
+        <button type="submit" disabled={isLoading} className="bg-blue-500 text-white py-1 px-2 rounded-md">
           {isLoading ? 'Loading...' : 'Get Attendances'}
         </button>
       </form>
@@ -70,7 +99,6 @@ const Register = () => {
                 <tr>
                   <th className="border border-gray-300 px-4 py-2">ID</th>
                   <th className="border border-gray-300 px-4 py-2">Event Name</th>
-            
                   <th className="border border-gray-300 px-4 py-2">User ID</th>
                   <th className="border border-gray-300 px-4 py-2">First Name</th>
                   <th className="border border-gray-300 px-4 py-2">Last Name</th>
@@ -84,7 +112,6 @@ const Register = () => {
                   <tr key={attendance.id}>
                     <td className="border border-gray-300 px-4 py-2">{attendance.id}</td>
                     <td className="border border-gray-300 px-4 py-2">{attendance.event.name}</td>
-              
                     <td className="border border-gray-300 px-4 py-2">{attendance.user.id}</td>
                     <td className="border border-gray-300 px-4 py-2">{attendance.user.first_name}</td>
                     <td className="border border-gray-300 px-4 py-2">{attendance.user.last_name}</td>

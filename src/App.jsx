@@ -89,7 +89,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard user={user} />}>
               <Route path="myattendance" element={<Myattendance user={user} />} />
               <Route path="userevents" element={<Userevents user={user} />} /> {/* Use Userevents component */}
-              <Route path="mypayments" element={<Mypayments user={user} />} />
+              <Route path="mypayments" element={<Mypayments user={user}  />} />
             </Route>
           )}
           <Route path="/signup" element={<Signup />} />

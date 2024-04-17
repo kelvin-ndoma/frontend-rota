@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const Userevents = ({ user }) => {
-  const navigate = useNavigate();
+
+const Userevents = ({ user, handleContribute  }) => {
+
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -29,10 +29,7 @@ const Userevents = ({ user }) => {
     }
   };
 
-  const navigateToPayment = (event) => {
-    console.log('Selected event:', event); // Logging the selected event
-    navigate('/dashboard/mypayments', { state: { event, user } });
-  };
+
 
   return (
     <div className="container mx-auto">
@@ -45,7 +42,7 @@ const Userevents = ({ user }) => {
             <p><span className="font-semibold">Location:</span> {event.location}</p>
             <p><span className="font-semibold">Datetime:</span> {formatDate(event.datetime)}</p>
             <p><span className="font-semibold">Description:</span> {event.description}</p>
-            <button onClick={() => navigateToPayment(event)} className="bg-blue-500 text-white px-4 py-2 rounded mt-2">Contribute</button>
+            <button onClick={() => handleContribute(event)} className="bg-blue-500 text-white px-4 py-2 rounded mt-2">Contribute</button>
           </div>
         ))}
       </div>

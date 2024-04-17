@@ -7,6 +7,7 @@ import Mypayments from './Mypayments';
 
 
 const Dashboard = ({ user }) => {
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,6 +17,10 @@ const Dashboard = ({ user }) => {
 
   const navigate = useNavigate();
 
+  const handleContribute = (event) => {
+    setSelectedEvent(event); // Set the selected event
+    navigate('/dashboard/mypayments'); // Navigate to the Payments component
+  };
   const handleLogout = async () => {
     try {
       const response = await fetch('http://localhost:3000/logout', {
@@ -130,9 +135,15 @@ const Dashboard = ({ user }) => {
           <h2 className="text-2xl font-bold mb-4">Welcome to your Dashboard {user.first_name}!</h2>
           {/* Nested Routes */}
           <Routes>
-            <Route path="/userevents" element={<Userevents user={user} />} />
+          <Route
+          path="/userevents"
+          element={<Userevents user={user} handleContribute={handleContribute} />}
+        />
             <Route path="/myattendance" element={<Myattendance user={user} />} />
-            <Route path="/mypayments" element={<Mypayments user={user} />} />
+            <Route
+          path="/mypayments"
+          element={<Mypayments user={user} selectedEvent={selectedEvent} />}
+        />
 
           </Routes>
         </div >

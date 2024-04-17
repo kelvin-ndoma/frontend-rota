@@ -25,6 +25,7 @@ const Mark = () => {
         method: 'GET',
         credentials: 'include',
       });
+
       if (response.ok) {
         const data = await response.json();
         setEvents(data);
@@ -42,6 +43,7 @@ const Mark = () => {
         method: 'GET',
         credentials: 'include',
       });
+
       if (response.ok) {
         const data = await response.json();
         setUsers(data);
@@ -63,6 +65,43 @@ const Mark = () => {
     setAttendanceRecords(updatedRecords);
   };
 
+  const handleSubmitAttendance = async () => {
+    try {
+      const event = events.find(event => event.name === selectedEvent);
+      if (!event) {
+        console.error(`Event "${selectedEvent}" not found`);
+        return;
+      }
+  
+      const response = await fetch(`http://localhost:3000/events/${event.id}/event_attendances`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ event_id: event.id, event_name: selectedEvent, event_attendances: attendanceRecords }),
+      });
+  
+      const responseData = await response.json();
+  
+      if (response.ok) {
+        console.log('Attendance marked successfully');
+        alert('Attendance marked successfully.');
+        setAttendanceRecords([]);
+      } else {
+        if (response.status === 400 && responseData.errors) {
+          console.error(responseData.errors);
+        } else {
+          throw new Error('Failed to mark attendance');
+        }
+      }
+    } catch (error) {
+      console.error('Error marking attendance:', error);
+      alert('Attendance already Marked.');
+    }
+  };
+
+
   const renderAttendanceButtons = (userId, selectedStatus) => {
     return (
       <div>
@@ -70,36 +109,14 @@ const Mark = () => {
           <button
             key={status}
             onClick={() => markAttendance(userId, status)}
-            className={`mr-2 ${
-              selectedStatus === status ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-            } px-4 py-2 rounded`}
+            className={`mr-2 ${selectedStatus === status ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+              } px-4 py-2 rounded`}
           >
             {status.charAt(0).toUpperCase() + status.slice(1)}
           </button>
         ))}
       </div>
     );
-  };
-
-  const handleSubmitAttendance = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/events/${selectedEvent}/event_attendances`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ event_attendances: attendanceRecords }),
-      });
-      if (response.ok) {
-        console.log('Attendance marked successfully');
-        setAttendanceRecords([]);
-      } else {
-        throw new Error('Failed to mark attendance');
-      }
-    } catch (error) {
-      console.error('Error marking attendance:', error);
-    }
   };
 
   return (
@@ -116,7 +133,7 @@ const Mark = () => {
       >
         <option value="">Select an event</option>
         {events.map((event) => (
-          <option key={event.id} value={event.id}>
+          <option key={event.id} value={event.name}>
             {event.name}
           </option>
         ))}

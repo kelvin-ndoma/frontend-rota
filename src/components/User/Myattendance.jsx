@@ -10,7 +10,7 @@ const Myattendance = ({ user }) => {
     const fetchAttendances = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/users/${user.id}/event_attendances`, {
+        const response = await axios.get(`http://localhost:3000/users/${user.name}/event_attendances`, {
           withCredentials: true
         });
         const sortedAttendances = response.data.sort((a, b) => {
