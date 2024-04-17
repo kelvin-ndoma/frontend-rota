@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
-import Confirmpay from './Confirmpay';
+
 
 const Payments = ({ user, selectedEvent }) => {
   const [accessToken, setAccessToken] = useState('');
@@ -30,7 +30,7 @@ const Payments = ({ user, selectedEvent }) => {
     e.preventDefault();
     try {
       const pushResponse = await axios.post(
-        'https://d351-165-90-6-63.ngrok-free.app/stkpush',
+        'https://14d1-165-90-6-63.ngrok-free.app/stkpush',
         {
           phoneNumber: phoneNumber,
           amount: amount,
@@ -49,7 +49,7 @@ const Payments = ({ user, selectedEvent }) => {
       await new Promise(resolve => setTimeout(resolve, 10000));
   
       const queryResponse = await axios.post(
-        'https://d351-165-90-6-63.ngrok-free.app/stkquery',
+        'https://14d1-165-90-6-63.ngrok-free.app/stkquery',
         {
           checkoutRequestID: CheckoutRequestID,
         },
